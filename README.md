@@ -8,7 +8,7 @@ That's where **wp-spider** comes to the rescue: This Python script will go throu
 
 Additionally the spider will also check any link for dead links, going to ressources that don't exist. Same it will check if any images on the site are missing from your library.
 
-**Disclaimer:** Don't run this script against a site you are not the owner of or you don't have permission to do so. Traffic like that might get interpreted as malicious and might result in throttling of your connection or a ban. If you have any measures like that on your site, it might be a good idea to add your IP to the whitelist.
+**Disclaimer:** Don't run this script against a site you are not the owner of or you don't have permission to do so. Traffic like that might get interpreted as malicious and might result in throttling of your connection or even a ban. If you have any measures like that on your site, it might be a good idea to add your IP to the whitelist.
 
 
 ## How it works
@@ -37,6 +37,7 @@ Install required none standard Python libraries:
 **requests** to make the HTTP calls, [link](https://pypi.org/project/requests/)
 * On Arch: `sudo pacman -S python-requests`
 * Via Pip: `pip install requests`
+
 **bs4** aka *BeautifulSoup4* to parse the html, [link](https://pypi.org/project/beautifulsoup4/)
 * On Arch: `sudo pacman -S python-beautifulsoup4`
 * Via Pip: `pip install beautifulsoup4`
@@ -63,7 +64,7 @@ After completion the script will create three CSV files in the csv folder, time 
     * **img_short**         : Shortened URL to the picture in the media library.
     * **img_status_code**   : HTTP status code of the image URL.
 
-From there it is straight forward further analyze the result by filtering the list by pictures not in use, links not resulting in a 200 HTTP response, pictures on the site that don't exist in the library and many other conclusions. 
+From there it is straight forward to further analyze the result by filtering the list by pictures not in use, links not resulting in a 200 HTTP response, pictures on the site that don't exist in the library and many other conclusions. 
 
 
 ## Config
@@ -77,7 +78,7 @@ The config file supports the following settings:
     * example: `https://www.example.com/wp-content/uploads/` for a default wordpress installation.
 * *valid_img_mime*  : A comma separated list of image [MIME types](https://www.iana.org/assignments/media-types/media-types.xhtml#image) you want to consider as a image to check for its existence. An easy way to exclude files like PDFs or other media files.
     * example: `image/jpeg, image/png`
-* *top_nav_class*   : The CSS class of the top nav bar so the script doesn't have to recheck these links again for every page.
+* *top_nav_class*   : The CSS class of the top nav bar so the script doesn't have to re-check these links over and over for every page.
     * example: `top-nav-class`
 * *footer_class*    : The CSS class of the footer, to avoid rechecking these links for every page.
     * example: `footer-class`
