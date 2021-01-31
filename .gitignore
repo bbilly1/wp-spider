@@ -1,0 +1,8 @@
+# cache
+__pycache__
+
+# igore config file in use
+config
+
+# ignore csv files created
+*.csv

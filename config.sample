@@ -1,0 +1,8 @@
+[setup]
+start_url = https://www.example.com/
+sitemap_url = https://www.example/sitemap_index.xml
+upload_folder = https://www.example/wp-content/uploads/
+valid_img_mime = image/jpeg, image/png
+top_nav_class = top-nav-class
+footer_class = footer-class
+request_timeout = 30
