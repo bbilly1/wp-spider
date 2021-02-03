@@ -1,0 +1,4 @@
+# empty folder to output csv files to
+*
+# Except this file
+!.gitignore
