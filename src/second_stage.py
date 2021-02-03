@@ -12,7 +12,7 @@ def discover_sitemap(config, discovered):
     sitemap_url = config['sitemap_url']
     request_timeout = config['request_timeout']
     # get main
-    print("look at sitemap")
+    print("parsing sitemap")
     try:
         response = requests.get(sitemap_url)
     except ConnectionError:
@@ -20,28 +20,42 @@ def discover_sitemap(config, discovered):
         response = requests.get(sitemap_url)
     xml = response.text
     soup = BeautifulSoup(xml, features="lxml")
-    sitemap_tags = soup.find_all("sitemap")
-    sitemap_list = [map.findNext("loc").text for map in sitemap_tags]
-    # loop through all list and get map by map
-    all_sitemap_pages = []
-    for sitemap in sitemap_list:
-        try:
-            response = requests.get(sitemap)
-        except ConnectionError:
-            sleep(request_timeout)
-            response = requests.get(sitemap)
-        xml = response.text
-        soup = BeautifulSoup(xml, features="lxml")
-        page_tags = soup.find_all("url")
-        page_list = [map.findNext("loc").text for map in page_tags]
-        # add every page to list
-        for page in page_list:
-            all_sitemap_pages.append(page)
-    # sort and return
-    all_sitemap_pages.sort()
+    # build list of sites
+    all_sitemap_pages = parse_sitemap(soup, request_timeout)
     # add to discovered list if new
     discovered = [discovered.append(page) for page in all_sitemap_pages if page not in discovered]
 
+
+def parse_sitemap(soup, request_timeout):
+    """ called from discover_sitemap to build the site list
+    figure out if its a single sitemap or a list of sitemaps """
+    sitemap_tags = soup.find_all("sitemap")
+    if len(sitemap_tags) == 0:
+        # is already the sitemap
+        page_tags = soup.find_all("url")
+        all_sitemap_pages = [map.findNext("loc").text for map in page_tags]
+    elif len(sitemap_tags) > 0:
+        # is a list of sitemaps to loop through
+        all_sitemap_pages = []
+        sitemap_list = [map.findNext("loc").text for map in sitemap_tags]
+        for sitemap in sitemap_list:
+            try:
+                response = requests.get(sitemap)
+            except ConnectionError:
+                sleep(request_timeout)
+                response = requests.get(sitemap)
+            xml = response.text
+            soup = BeautifulSoup(xml, features="lxml")
+            page_tags = soup.find_all("url")
+            page_list = [map.findNext("loc").text for map in page_tags]
+            # add every page to list
+            for page in page_list:
+                all_sitemap_pages.append(page)
+            # take it easy
+            sleep(request_timeout)
+    # sort and return
+    all_sitemap_pages.sort()
+    return all_sitemap_pages
 
 
 def get_media_lib(config):

@@ -33,7 +33,7 @@ The downside, additional to the limitations above is, that depending on the amou
 
 
 ## Installation
-Install required none standard Python libraries:
+Install required none standard Python libraries:  
 **requests** to make the HTTP calls, [link](https://pypi.org/project/requests/)
 * On Arch: `sudo pacman -S python-requests`
 * Via Pip: `pip install requests`
@@ -72,8 +72,9 @@ Copy or rename the file *config.sample* to *config* and make sure you set all th
 The config file supports the following settings:
 * *start_url*       : Fully qualified URL of the home page of the website to parse. Add *www* if your canonical website uses it to avoid landing in a redirect for every request.
     * example: `https://www.example.com/`
-* *sitemap_url*     : Link to the sitemap, so pages not linked anywhere but indexed can get parsed too.
+* *sitemap_url*     : Link to the sitemap, so pages not linked anywhere but indexed can get parsed too. Link can be direct link to your sitemap or link to a list of sitemaps.
     * example: `https://www.example.com/sitemap_index.xml`
+    * example: `https://www.example.com/sitemap.xml`
 * *upload_folder*   : Wordpress upload folder where the media library builds the folder tree.
     * example: `https://www.example.com/wp-content/uploads/` for a default wordpress installation.
 * *valid_img_mime*  : A comma separated list of image [MIME types](https://www.iana.org/assignments/media-types/media-types.xhtml#image) you want to consider as a image to check for its existence. An easy way to exclude files like PDFs or other media files.
