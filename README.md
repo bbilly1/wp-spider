@@ -42,6 +42,8 @@ Install required none standard Python libraries:
 * On Arch: `sudo pacman -S python-beautifulsoup4`
 * Via Pip: `pip install beautifulsoup4`
 
+or use `pip` to install the requirements:  
+`pip install -r requirements.txt`
 
 ## Run
 Make sure the `config` file is setup correctly, see bellow.  
