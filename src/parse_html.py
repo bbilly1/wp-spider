@@ -59,9 +59,12 @@ def get_images(soup, config):
     # gallery item from a tag
     all_a_tag = soup.find_all('a')
     for a_tag in all_a_tag:
-        a_href = a_tag['href']
-        if upload_folder in a_href:
-            img_url_set.add(a_href)
+        try:
+            a_href = a_tag['href']
+            if upload_folder in a_href:
+                img_url_set.add(a_href)
+        except KeyError:
+            continue
     # external
     all_external_css = soup.find_all("link", {"rel": "stylesheet"})
     for css_file in all_external_css:
